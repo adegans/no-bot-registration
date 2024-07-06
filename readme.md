@@ -1,7 +1,7 @@
 # No-Bot Registration
 ## Prevent bots from creating accounts by blacklisting domains and usernames and present people with a human friendly security question.
 
-View on: [ajdg.solutions](https://ajdg.solutions/product/no-bot-registration/) ~ [WordPres.org](https://wordpress.org/plugins/no-bot-registration/) \
+View on: [ajdg.solutions](https://ajdg.solutions/product/no-bot-registration/) ~ [WordPres.org](https://wordpress.org/plugins/no-bot-registration/)
 
 ## Description
 Tired of spam bots in your WordPress and ClassicPress website? Do you want to get rid of false registrations and other spammy nonsense? Don't wan't to use a clumsy and user-unfriendly Captcha? Don't want to use a Captcha from Google or other big-tech company period?
