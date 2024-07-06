@@ -1,0 +1,335 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: No-Bot Registration\n"
+"POT-Creation-Date: 2024-06-17 11:48-0600\n"
+"PO-Revision-Date: 2023-01-02 19:56-0700\n"
+"Last-Translator: Arnan de Gans <support@ajdg.solutions>\n"
+"Language-Team: Arnan de Gans <support@ajdg.solutions>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Generator: Poedit 3.4.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: no-bot-registration.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: no-bot-registration.php:209
+msgid "(Required)"
+msgstr ""
+
+#: no-bot-registration.php:455
+msgid "Question:"
+msgstr ""
+
+#: no-bot-registration.php:456
+msgid "Type here to add a new question"
+msgstr ""
+
+#: no-bot-registration.php:456
+msgid "Delete Question"
+msgstr ""
+
+#: no-bot-registration.php:458
+msgid ""
+"This question has no answers! Add at least one answer or remove the question."
+msgstr ""
+
+#: no-bot-registration.php:460
+msgid "Possible Answers:"
+msgstr ""
+
+#: no-bot-registration.php:460
+msgid "Answers are case-insensitive."
+msgstr ""
+
+#: no-bot-registration.php:472
+msgid "Add Possible Answer"
+msgstr ""
+
+#: no-bot-registration.php:555
+msgid "Settings updated."
+msgstr ""
+
+#: no-bot-registration.php:555
+msgid "updated"
+msgstr ""
+
+#: no-bot-registration.php:574
+msgid "No-Bot Registration settings"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+#: no-bot-registration.php:582
+msgid "No-Bot Registration"
+msgstr ""
+
+#: no-bot-registration.php:584
+msgid "Get help with No-Bot Registration"
+msgstr ""
+
+#: no-bot-registration.php:585
+msgid ""
+"If you have any questions about using No-Bot Registration please post it on "
+"my support forum. Always happy to help!"
+msgstr ""
+
+#: no-bot-registration.php:587
+msgid "AJdG Solutions support forum"
+msgstr ""
+
+#: no-bot-registration.php:587
+msgid "Forum on wordpress.org"
+msgstr ""
+
+#: no-bot-registration.php:589
+msgid "Support No-Bot Registration"
+msgstr ""
+
+#: no-bot-registration.php:590
+msgid ""
+"Consider writing a review or making a donation if you like the plugin or if "
+"you find the plugin useful. Thanks for your support!"
+msgstr ""
+
+#: no-bot-registration.php:592
+msgid "Support me with a token of thanks"
+msgstr ""
+
+#: no-bot-registration.php:592
+msgid "Gift a token of thanks"
+msgstr ""
+
+#: no-bot-registration.php:592
+msgid "Write review on wordpress.org"
+msgstr ""
+
+#: no-bot-registration.php:594
+msgid "Plugins and services"
+msgstr ""
+
+#: no-bot-registration.php:600
+msgid "AdRotate Professional"
+msgstr ""
+
+#: no-bot-registration.php:601
+msgid "WordPress Plugin"
+msgstr ""
+
+#: no-bot-registration.php:604
+msgid ""
+"Place Adsense Ads and any other kind of advert on your WordPress and "
+"ClassicPress website."
+msgstr ""
+
+#: no-bot-registration.php:610
+msgid "WP Maintenance"
+msgstr ""
+
+#: no-bot-registration.php:611
+msgid "Professional service"
+msgstr ""
+
+#: no-bot-registration.php:614
+msgid ""
+"Get all the latest updates for WordPress and plugins. Maintenance, delete "
+"spam and clean up files."
+msgstr ""
+
+#: no-bot-registration.php:620
+msgid "All my plugins"
+msgstr ""
+
+#: no-bot-registration.php:621
+msgid "WordPress and ClassicPress"
+msgstr ""
+
+#: no-bot-registration.php:624
+msgid ""
+"Plugins for WordPres, ClassicPress, WooCommerce, Classic Commerce and "
+"bbPress."
+msgstr ""
+
+#: no-bot-registration.php:633
+msgid "Registration protection"
+msgstr ""
+
+#: no-bot-registration.php:640
+msgid "Where to add security questions?"
+msgstr ""
+
+#: no-bot-registration.php:641
+msgid "Protect user registration."
+msgstr ""
+
+#: no-bot-registration.php:641
+msgid "Has no effect if user registration is disabled."
+msgstr ""
+
+#: no-bot-registration.php:644
+msgid "Protect blog comments."
+msgstr ""
+
+#: no-bot-registration.php:644
+msgid "Has no effect if comments on posts are not enabled."
+msgstr ""
+
+#: no-bot-registration.php:646
+msgid "Protect WooCommerce and Classic Commerce checkout pages."
+msgstr ""
+
+#: no-bot-registration.php:646
+msgid ""
+"If user registration is enabled. Has no effect if WooCommerce/Classic "
+"Commerce is not installed."
+msgstr ""
+
+#: no-bot-registration.php:648
+msgid "Failure message:"
+msgstr ""
+
+#: no-bot-registration.php:649
+msgid ""
+"Displayed to those who fail the security question. Keep it short and simple."
+msgstr ""
+
+#: no-bot-registration.php:662
+msgid "Enter a new answer here"
+msgstr ""
+
+#: no-bot-registration.php:679 no-bot-registration.php:712
+msgid "Save Changes"
+msgstr ""
+
+#: no-bot-registration.php:689
+msgid "Blacklisted e-mail domains and usernames"
+msgstr ""
+
+#: no-bot-registration.php:694
+msgid ""
+"If you get many fake accounts or paid robots registering you can blacklist "
+"their usernames, email addresses or domains to prevent them from adding "
+"multiple accounts."
+msgstr ""
+
+#: no-bot-registration.php:696
+msgid "Blacklist message:"
+msgstr ""
+
+#: no-bot-registration.php:697
+msgid ""
+"This message is shown to users who are not allowed to register on your site. "
+"Keep it short and simple."
+msgstr ""
+
+#: no-bot-registration.php:699
+msgid "Blacklisted emails:"
+msgstr ""
+
+#: no-bot-registration.php:700
+msgid ""
+"You can add: full emails (someone@hotmail.com), domains (hotmail.com) or "
+"simply a keyword (hotmail)."
+msgstr ""
+
+#: no-bot-registration.php:700
+msgid "One item per line! Add as many items as you need."
+msgstr ""
+
+#: no-bot-registration.php:700 no-bot-registration.php:703
+msgid "Caution:"
+msgstr ""
+
+#: no-bot-registration.php:700
+msgid ""
+"This is a powerful filter matching partial words. So banning \"mail\" will "
+"also block Gmail users!"
+msgstr ""
+
+#: no-bot-registration.php:702
+msgid "Blacklisted usernames:"
+msgstr ""
+
+#: no-bot-registration.php:703
+msgid "One item per line! Add as many as you need."
+msgstr ""
+
+#: no-bot-registration.php:703
+msgid ""
+"This is a powerful filter matching partial words. So banning \"web\" will "
+"also block webmaster!"
+msgstr ""
+
+#: no-bot-registration.php:705
+msgid "Need more protection against fake accounts?"
+msgstr ""
+
+#: no-bot-registration.php:706
+msgid ""
+"Add a few restrictions on how usernames are formatted. This helps against "
+"automated bots and manual entry fake accounts."
+msgstr ""
+
+#: no-bot-registration.php:707
+msgid "Disallow spaces in usernames?"
+msgstr ""
+
+#: no-bot-registration.php:708
+msgid "Disallow usernames that are shorter than 5 characters?"
+msgstr ""
+
+#: no-bot-registration.php:709
+msgid "Disallow usernames to be an email address?"
+msgstr ""
+
+#: no-bot-registration.php:709
+msgid ""
+"Use with caution, this may conflict with some plugins like WooCommerce which "
+"DO allow email addresses as usernames."
+msgstr ""
+
+#: no-bot-registration.php:710
+msgid "Disallow more than 4 periods in email addresses?"
+msgstr ""
+
+#: no-bot-registration.php:710
+msgid ""
+"A common trick is to break up words or names in email addresses with a lot "
+"of p.er.i.od.s@example.com."
+msgstr ""
+
+#: no-bot-registration.php:719
+msgid "News & Updates"
+msgstr ""
+
+#: no-bot-registration.php:721
+msgid "Subscribe via RSS feed"
+msgstr ""
+
+#: no-bot-registration.php:721
+msgid "No account required!"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid ""
+"https://ajdg.solutions/product/no-bot-registration/?"
+"mtm_campaign=nobot_registration"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Prevent people from registering by blacklisting emails and present people "
+"with a security question when registering or posting a comment."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Arnan de Gans"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://www.arnan.me/?mtm_campaign=nobot_registration"
+msgstr ""
