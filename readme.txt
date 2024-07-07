@@ -3,18 +3,17 @@ Contributors: adegans
 Tags: antispam, protection, fake account, comment spam, security
 Donate link: https://www.arnan.me/donate.html?mtm_campaign=nobot_registration
 Requires at least: 4.9
-Tested up to: 6.5.4
-Stable tag: 2.1
+Tested up to: 6.6
+Stable tag: 2.1.1
 License: GPLv3
 
 Prevent bots from creating accounts by blacklisting domains and usernames and present people with a human friendly security question.
 
 == Description ==
+Tired of spam bots in your WordPress and ClassicPress website? Do you want to get rid of false registrations and other spammy nonsense? Don't wan't to use a clumsy and user-unfriendly Captcha? Don't want to use a Captcha from Google or other big-tech company period?
 
-Tired of spam bots? Do you want to get rid of false registrations and other spammy nonsense? Don't wan't to use a clumsy and user-unfriendly Captcha?
-Meet No-Bot Registration, superior protection without making it hard for your visitors. Easily blacklist (partial) email addresses and domains so they can no longer register an account.
-
-You create the questions and a set of possible answers yourself and visitors have to answer your question when they register.
+Meet **No-Bot Registration**, easy to use, superior protection without making it hard for your visitors. Easily blacklist (partial) email addresses and domains so they can no longer register an account. \
+Create one or more questions and a set of possible answers for them and visitors have to answer your question when they register.
 If they answer wrong, they get denied their account.
 
 Questions can be as simple as "1 + 1", with possible answers being 1, one or uno. That way you can plan for eventualities and how people interpret your question.
@@ -22,7 +21,6 @@ Questions can be as simple as "1 + 1", with possible answers being 1, one or uno
 = Features =
 * Protect registration forms
 * Protect the WooCommerce checkout form if you let people register from there
-* Protect the Classic Commerce checkout form like you do with WooCommerce
 * Protect your blog comment form
 * Prevents comment spam, trackback spam and other nuisances with ease
 * Set up multiple security questions to further confuse bots
@@ -30,6 +28,10 @@ Questions can be as simple as "1 + 1", with possible answers being 1, one or uno
 * Configurable notification messages for users failing the security tests
 
 == Changelog ==
+
+= 2.1.1 - July 7, 2024 =
+* [removed] Classic Commerce support
+* [updated] Readme
 
 = 2.1 - 17 June, 2024 =
 * [new] Visual error when a question has no answers 

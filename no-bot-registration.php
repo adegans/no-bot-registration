@@ -1,12 +1,12 @@
 <?php
 /*
 Plugin Name: No-Bot Registration
-Plugin URI: https://ajdg.solutions/product/no-bot-registration/?mtm_campaign=nobot_registration
+Plugin URI: https://ajdg.solutions/product/no-bot-registration/
 Author: Arnan de Gans
-Author URI: https://www.arnan.me/?mtm_campaign=nobot_registration
+Author URI: https://www.arnan.me/
 Description: Prevent people from registering by blacklisting emails and present people with a security question when registering or posting a comment.
 Text Domain: ajdg-nobot
-Version: 2.1
+Version: 2.1.1
 License: GPLv3
 */
 
@@ -40,7 +40,7 @@ add_action('register_form', 'ajdg_nobot_registration_field');
 add_filter('registration_errors', 'ajdg_nobot_check_registration', 10, 3);
 add_action('registration_errors', 'ajdg_nobot_blacklist', 11, 3);
 
-if(in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins'))) OR in_array('classic-commerce/classic-commerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+if(in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
 	// Protect WooCommerce My-Account page
 	add_action('woocommerce_register_form', 'ajdg_nobot_woocommerce_field');
 	// Protect WooCommerce Registration on checkout
@@ -621,7 +621,7 @@ function ajdg_nobot_dashboard() {
 											<div class="sub_title"><?php _e('WordPress and ClassicPress', 'ajdg-nobot'); ?></div>
 											<div class="cta"><a role="button" class="cta_button" href="https://ajdg.solutions/plugins/?mtm_campaign=nobot_registration" target="_blank">View now</a></div>
 											<hr>
-											<div class="description"><?php _e('Plugins for WordPres, ClassicPress, WooCommerce, Classic Commerce and bbPress.', 'ajdg-nobot'); ?></div>
+											<div class="description"><?php _e('Plugins for WordPres, ClassicPress, WooCommerce and bbPress.', 'ajdg-nobot'); ?></div>
 										</div>
 									</td>
 								</tr>
@@ -643,7 +643,7 @@ function ajdg_nobot_dashboard() {
 
 								<p><input type="checkbox" name="ajdg_nobot_comment" value="1" <?php if($ajdg_nobot_protect['comment']) echo 'checked="checked"' ?> /> <?php _e('Protect blog comments.', 'ajdg-nobot'); ?><br /><em><?php _e('Has no effect if comments on posts are not enabled.', 'ajdg-nobot'); ?></em></p>
 
-								<p><input type="checkbox" name="ajdg_nobot_woocommerce" value="1" <?php if($ajdg_nobot_protect['woocommerce']) echo 'checked="checked"' ?> /> <?php _e('Protect WooCommerce and Classic Commerce checkout pages.', 'ajdg-nobot'); ?><br /><em><?php _e('If user registration is enabled. Has no effect if WooCommerce/Classic Commerce is not installed.', 'ajdg-nobot'); ?></em></p>
+								<p><input type="checkbox" name="ajdg_nobot_woocommerce" value="1" <?php if($ajdg_nobot_protect['woocommerce']) echo 'checked="checked"' ?> /> <?php _e('Protect WooCommerce checkout pages.', 'ajdg-nobot'); ?><br /><em><?php _e('If user registration is enabled. Has no effect if WooCommerce is not installed.', 'ajdg-nobot'); ?></em></p>
 
 								<p><strong><?php _e('Failure message:', 'ajdg-nobot'); ?></strong></p>
 								<p><textarea name='ajdg_nobot_security_message' cols='70' rows='2' style="width: 100%;"><?php echo stripslashes($ajdg_nobot_security_message); ?></textarea><br /><em><?php _e('Displayed to those who fail the security question. Keep it short and simple.', 'ajdg-nobot'); ?></em></p>
