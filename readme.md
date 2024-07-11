@@ -1,5 +1,7 @@
-# No-Bot Registration
-## Prevent bots from creating accounts by blacklisting domains and usernames and present people with a human friendly security question.
+# No-Bot Registration for WordPress
+### No-Bot Registration for ClassicPress
+
+Prevent bots from creating accounts by blacklisting domains and usernames and present people with a human friendly security question.
 
 View on: [ajdg.solutions](https://ajdg.solutions/product/no-bot-registration/) ~ [WordPres.org](https://wordpress.org/plugins/no-bot-registration/)
 
