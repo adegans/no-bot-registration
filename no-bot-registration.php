@@ -6,13 +6,13 @@ Author: Arnan de Gans
 Author URI: https://www.arnan.me/
 Description: Prevent people from registering by blacklisting emails and present people with a security question when registering or posting a comment.
 Text Domain: ajdg-nobot
-Version: 2.1.1
+Version: 2.1.2
 License: GPLv3
 */
 
 /* ------------------------------------------------------------------------------------
 *  COPYRIGHT NOTICE
-*  Copyright 2014-2024 Arnan de Gans. All Rights Reserved.
+*  Copyright 2014-2025 Arnan de Gans. All Rights Reserved.
 
 *  COPYRIGHT NOTICES AND ALL THE COMMENTS SHOULD REMAIN INTACT.
 *  By using this code you agree to indemnify Arnan de Gans from any
@@ -138,8 +138,8 @@ function ajdg_nobot_adminmenu() {
 -------------------------------------------------------------*/
 function ajdg_nobot_action_links($links) {
 	$links['nobot-settings'] = sprintf('<a href="%s">%s</a>', admin_url('tools.php?page=ajdg-nobot-settings'), 'Settings');
-	$links['nobot-help'] = sprintf('<a href="%s" target="_blank">%s</a>', 'https://ajdg.solutions/forums/?mtm_campaign=nobot_registration', 'Support');
-	$links['nobot-plugins'] = sprintf('<a href="%s" target="_blank">%s</a>', 'https://ajdg.solutions/plugins/?mtm_campaign=nobot_registration', 'More plugins');
+	$links['nobot-help'] = sprintf('<a href="%s" target="_blank">%s</a>', 'https://support.ajdg.net/', 'Support');
+	$links['nobot-plugins'] = sprintf('<a href="%s" target="_blank">%s</a>', 'https://ajdg.solutions/plugins/', 'More plugins');
 
 	return $links;
 }
@@ -584,42 +584,42 @@ function ajdg_nobot_dashboard() {
 							<p><strong><?php _e('Get help with No-Bot Registration', 'ajdg-nobot'); ?></strong></p>
 							<p><?php _e('If you have any questions about using No-Bot Registration please post it on my support forum. Always happy to help!', 'ajdg-nobot'); ?></p>
 
-							<p><a class="button-primary" href="https://ajdg.solutions/forums/forum/no-bot-registration/?mtm_campaign=nobot_registration" target="_blank" title="<?php _e('AJdG Solutions support forum', 'ajdg-nobot'); ?>"><?php _e('AJdG Solutions support forum', 'ajdg-nobot'); ?></a> <a class="button-secondary" href="https://wordpress.org/support/plugin/no-bot-registration/" target="_blank" title="<?php _e('Forum on wordpress.org', 'ajdg-nobot'); ?>"><?php _e('Forum on wordpress.org', 'ajdg-nobot'); ?></a></p>
+							<p><a class="button-primary" href="https://support.ajdg.net/" target="_blank" title="<?php _e('AJdG Solutions support pages', 'ajdg-nobot'); ?>"><?php _e('AJdG Solutions support', 'ajdg-nobot'); ?></a> <a class="button-secondary" href="https://wordpress.org/support/plugin/no-bot-registration/" target="_blank" title="<?php _e('Forum on wordpress.org', 'ajdg-nobot'); ?>"><?php _e('Forum on wordpress.org', 'ajdg-nobot'); ?></a></p>
 
 							<p><strong><?php _e('Support No-Bot Registration', 'ajdg-nobot'); ?></strong></p>
 							<p><?php _e('Consider writing a review or making a donation if you like the plugin or if you find the plugin useful. Thanks for your support!', 'ajdg-nobot'); ?></p>
 
-							<p><a class="button-primary" href="https://www.arnan.me/donate.html?mtm_campaign=nobot_registration" target="_blank" title="<?php _e('Support me with a token of thanks', 'ajdg-nobot'); ?>"><?php _e('Gift a token of thanks', 'ajdg-nobot'); ?></a> <a class="button-secondary" href="https://wordpress.org/support/plugin/no-bot-registration/reviews?rate=5#postform" target="_blank" title="<?php _e('Write review on wordpress.org', 'ajdg-nobot'); ?>"><?php _e('Write review on wordpress.org', 'ajdg-nobot'); ?></a></p>
+							<p><a class="button-primary" href="https://www.arnan.me/donate.html" target="_blank" title="<?php _e('Support me with a token of thanks', 'ajdg-nobot'); ?>"><?php _e('Gift a token of thanks', 'ajdg-nobot'); ?></a> <a class="button-secondary" href="https://wordpress.org/support/plugin/no-bot-registration/reviews?rate=5#postform" target="_blank" title="<?php _e('Write review on wordpress.org', 'ajdg-nobot'); ?>"><?php _e('Write review on wordpress.org', 'ajdg-nobot'); ?></a></p>
 
 							<p><strong><?php _e('Plugins and services', 'ajdg-nobot'); ?></strong></p>
 							<table width="100%">
 								<tr>
 									<td width="33%">
 										<div class="ajdg-sales-widget" style="display: inline-block; margin-right:2%;">
-											<a href="https://ajdg.solutions/product/adrotate-pro-single/?mtm_campaign=nobot_registration" target="_blank"><div class="header"><img src="<?php echo plugins_url("/images/offers/monetize-your-site.jpg", __FILE__); ?>" alt="AdRotate Professional" width="228" height="120"></div></a>
-											<a href="https://ajdg.solutions/product/adrotate-pro-single/?mtm_campaign=nobot_registration" target="_blank"><div class="title"><?php _e('AdRotate Professional', 'ajdg-nobot'); ?></div></a>
+											<a href="https://ajdg.solutions/product/adrotate-pro-single/" target="_blank"><div class="header"><img src="<?php echo plugins_url("/images/offers/monetize-your-site.jpg", __FILE__); ?>" alt="AdRotate Professional" width="228" height="120"></div></a>
+											<a href="https://ajdg.solutions/product/adrotate-pro-single/" target="_blank"><div class="title"><?php _e('AdRotate Professional', 'ajdg-nobot'); ?></div></a>
 											<div class="sub_title"><?php _e('WordPress Plugin', 'ajdg-nobot'); ?></div>
-											<div class="cta"><a role="button" class="cta_button" href="https://ajdg.solutions/product/adrotate-pro-single/?mtm_campaign=nobot_registration" target="_blank">Starting at &euro; 39,-</a></div>
+											<div class="cta"><a role="button" class="cta_button" href="https://ajdg.solutions/product/adrotate-pro-single/" target="_blank">Starting at &euro; 39,-</a></div>
 											<hr>
 											<div class="description"><?php _e('Place Adsense Ads and any other kind of advert on your WordPress and ClassicPress website.', 'ajdg-nobot'); ?></div>
 										</div>
 									</td>
 									<td width="33%">
 										<div class="ajdg-sales-widget" style="display: inline-block; margin-right:2%;">
-											<a href="https://ajdg.solutions/product/wordpress-maintenance-and-updates/?mtm_campaign=nobot_registration" target="_blank"><div class="header"><img src="<?php echo plugins_url("/images/offers/wordpress-maintenance.jpg", __FILE__); ?>" alt="WordPress Maintenance" width="228" height="120"></div></a>
-											<a href="https://ajdg.solutions/product/wordpress-maintenance-and-updates/?mtm_campaign=nobot_registration" target="_blank"><div class="title"><?php _e('WP Maintenance', 'ajdg-nobot'); ?></div></a>
+											<a href="https://ajdg.solutions/product/wordpress-maintenance-and-updates/" target="_blank"><div class="header"><img src="<?php echo plugins_url("/images/offers/wordpress-maintenance.jpg", __FILE__); ?>" alt="WordPress Maintenance" width="228" height="120"></div></a>
+											<a href="https://ajdg.solutions/product/wordpress-maintenance-and-updates/" target="_blank"><div class="title"><?php _e('WP Maintenance', 'ajdg-nobot'); ?></div></a>
 											<div class="sub_title"><?php _e('Professional service', 'ajdg-nobot'); ?></div>
-											<div class="cta"><a role="button" class="cta_button" href="https://ajdg.solutions/product/wordpress-maintenance-and-updates/?mtm_campaign=nobot_registration" target="_blank">Starting at &euro; 22,50</a></div>
+											<div class="cta"><a role="button" class="cta_button" href="https://ajdg.solutions/product/wordpress-maintenance-and-updates/" target="_blank">Starting at &euro; 22,50</a></div>
 											<hr>
 											<div class="description"><?php _e('Get all the latest updates for WordPress and plugins. Maintenance, delete spam and clean up files.', 'ajdg-nobot'); ?></div>
 										</div>
 									</td>
 									<td>
 										<div class="ajdg-sales-widget" style="display: inline-block;">
-											<a href="https://ajdg.solutions/plugins/?mtm_campaign=nobot_registration" target="_blank"><div class="header"><img src="<?php echo plugins_url("/images/offers/more-plugins.jpg", __FILE__); ?>" alt="AJdG Solutions Plugins" width="228" height="120"></div></a>
-											<a href="https://ajdg.solutions/plugins/?mtm_campaign=nobot_registration" target="_blank"><div class="title"><?php _e('All my plugins', 'ajdg-nobot'); ?></div></a>
+											<a href="https://ajdg.solutions/plugins/" target="_blank"><div class="header"><img src="<?php echo plugins_url("/images/offers/more-plugins.jpg", __FILE__); ?>" alt="AJdG Solutions Plugins" width="228" height="120"></div></a>
+											<a href="https://ajdg.solutions/plugins/" target="_blank"><div class="title"><?php _e('All my plugins', 'ajdg-nobot'); ?></div></a>
 											<div class="sub_title"><?php _e('WordPress and ClassicPress', 'ajdg-nobot'); ?></div>
-											<div class="cta"><a role="button" class="cta_button" href="https://ajdg.solutions/plugins/?mtm_campaign=nobot_registration" target="_blank">View now</a></div>
+											<div class="cta"><a role="button" class="cta_button" href="https://ajdg.solutions/plugins/" target="_blank">View now</a></div>
 											<hr>
 											<div class="description"><?php _e('Plugins for WordPres, ClassicPress, WooCommerce and bbPress.', 'ajdg-nobot'); ?></div>
 										</div>

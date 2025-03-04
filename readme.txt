@@ -1,10 +1,10 @@
 === No-Bot Registration ===
 Contributors: adegans
 Tags: antispam, protection, fake account, comment spam, security
-Donate link: https://www.arnan.me/donate.html?mtm_campaign=nobot_registration
+Donate link: https://www.arnan.me/donate.html
 Requires at least: 4.9
-Tested up to: 6.6
-Stable tag: 2.1.1
+Tested up to: 6.7.2
+Stable tag: 2.1.2
 License: GPLv3
 
 Prevent bots from creating accounts by blacklisting domains and usernames and present people with a human friendly security question.
@@ -28,6 +28,10 @@ Questions can be as simple as "1 + 1", with possible answers being 1, one or uno
 * Configurable notification messages for users failing the security tests
 
 == Changelog ==
+
+= 2.1.2 - March 4, 2025 =
+* [tested] with WordPress 6.7
+* [update] Action links
 
 = 2.1.1 - July 7, 2024 =
 * [removed] Classic Commerce support
@@ -189,10 +193,10 @@ Questions can be as simple as "1 + 1", with possible answers being 1, one or uno
 == Frequently Asked Questions ==
 
 = I need help with this plugin =
-Check out my [Support Forum](https://ajdg.solutions/forums/forum/no-bot-registration/)
+Check out my [Support system](https://support.ajdg.net/)
 
 = This is cool, do you have more plugins? =
-Yep, check out my website [AJdG Solutions](https://ajdg.solutions/plugins/?mtm_campaign=nobot_registration)
+Yep, check out my website [AJdG Solutions](https://ajdg.solutions/plugins/)
 
 == Screenshots ==
 
