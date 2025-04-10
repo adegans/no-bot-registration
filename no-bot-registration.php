@@ -6,7 +6,7 @@ Author: Arnan de Gans
 Author URI: https://www.arnan.me/
 Description: Prevent people from registering by blacklisting emails and present people with a security question when registering or posting a comment.
 Text Domain: ajdg-nobot
-Version: 2.1.2
+Version: 2.2
 License: GPLv3
 */
 
@@ -83,9 +83,10 @@ function ajdg_nobot_activate() {
 		$blacklist = explode("\n", get_option('blacklist_keys')); // wp core option
 	}
 
-	$blacklist = array_merge($blacklist, array('hotmail', 'yahoo', '.cn', '.info', '.biz'));
+	$blacklist = array_merge($blacklist, array('hotmail', 'yahoo', '.cn', '.info', '.biz', '.xyz', '.ws'));
+	$blacklist = array_unique($blacklist);
 	sort($blacklist);
-	$blacklist = implode("\n", array_unique($blacklist));
+	$blacklist = implode("\n", $blacklist);
 
 	if(version_compare($wp_version, '5.5.0', '>=')) {
 		update_option('disallowed_keys', $blacklist);
@@ -366,8 +367,8 @@ function ajdg_nobot_check_config() {
 	if(!is_array($nobot_blacklist_protect) OR count($nobot_blacklist_protect) == 0) {
 		update_option('ajdg_nobot_blacklist_protect', array('namelength' => 0, 'nameisemail' => 0, 'emailperiods' => 0, 'namespaces' => 0));
 	}
-	if(!is_array($nobot_blacklist_usernames) OR count($nobot_blacklist_usernames) == 0) {
-		update_option('ajdg_nobot_blacklist_usernames', implode("\n", array('subscriber', 'editor', 'admin', 'superadmin', 'author', 'customer', 'contributor', 'administrator', 'shop manager', 'shopmanager', 'email', 'ecommerce', 'forum', 'forums', 'feedback', 'follow', 'guest', 'httpd', 'https', 'information', 'invite', 'knowledgebase', 'lists', 'webmaster', 'yourname', 'support', 'team')));
+	if(!is_array($nobot_blacklist_usernames)) {
+		update_option('ajdg_nobot_blacklist_usernames', array('subscriber', 'editor', 'admin', 'superadmin', 'author', 'customer', 'contributor', 'administrator', 'shop manager', 'shopmanager', 'email', 'ecommerce', 'forum', 'forums', 'feedback', 'follow', 'guest', 'httpd', 'https', 'information', 'invite', 'knowledgebase', 'lists', 'webmaster', 'yourname', 'support', 'team'));
 	}
 	if(strlen($nobot_blacklist_message) == 0) {
 		update_option('ajdg_nobot_blacklist_message', 'Your email has been banned from registration! Try using another email address or contact support for a solution.');
@@ -529,21 +530,41 @@ function ajdg_nobot_dashboard() {
 
 		if(isset($_POST['ajdg_nobot_blacklist'])) {
 			$blacklist_new_keys = strip_tags(htmlspecialchars($_POST['ajdg_nobot_blacklist'], ENT_QUOTES));
-			$blacklist_array = explode("\n", $blacklist_new_keys);
-			sort($blacklist_array);
+			$blacklist_new_keys = str_replace(array("\r\n", "\r", "\n", ", "), ',', trim($blacklist_new_keys));
+			$blacklist_new_keys = explode(",", $blacklist_new_keys);
+
+			$blacklist_keys_array = array();
+			foreach($blacklist_new_keys as $k => $key) {
+				if(!empty($key)) $blacklist_keys_array[] = $key;
+			}
+			unset($blacklist_new_keys, $k, $key);
+
+			$blacklist_keys_array = array_unique($blacklist_keys_array);
+			sort($blacklist_keys_array);
+			$blacklist_keys_array = implode("\n", $blacklist_keys_array); // Must be string with newlines for WordPress...
 
 			if(version_compare($wp_version, '5.5.0', '>=')) {
-				update_option('disallowed_keys', implode("\n", array_unique($blacklist_array)));
+				update_option('disallowed_keys', $blacklist_keys_array);
 			} else {
-				update_option('blacklist_keys', implode("\n", array_unique($blacklist_array)));
+				update_option('blacklist_keys', $blacklist_keys_array);
 			}
 		}
 
 		if(isset($_POST['ajdg_nobot_blacklist_usernames'])) {
 			$blacklist_new_usernames = strip_tags(htmlspecialchars($_POST['ajdg_nobot_blacklist_usernames'], ENT_QUOTES));
-			$blacklist_usernames_array = explode("\n", $blacklist_new_usernames);
+			$blacklist_new_usernames = str_replace(array("\r\n", "\r", "\n", ", "), ',', trim($blacklist_new_usernames));
+			$blacklist_new_usernames = explode(",", $blacklist_new_usernames);
+			
+			$blacklist_usernames_array = array();
+			foreach($blacklist_new_usernames as $k => $username) {
+				if(!empty($username)) $blacklist_usernames_array[] = $username;
+			}
+			unset($blacklist_new_usernames, $k, $username);
+			
+			$blacklist_usernames_array = array_unique($blacklist_usernames_array);
 			sort($blacklist_usernames_array);
-			update_option('ajdg_nobot_blacklist_usernames', implode("\n", array_unique($blacklist_usernames_array)));
+
+			update_option('ajdg_nobot_blacklist_usernames', $blacklist_usernames_array);
 		}
 
 		$blacklist_protect['namespaces'] = (isset($_POST['ajdg_nobot_allow_namespaces'])) ? 1 : 0;
@@ -564,6 +585,7 @@ function ajdg_nobot_dashboard() {
 	    $ajdg_nobot_blacklist = get_option('blacklist_keys'); // WP Core
 	}
     $ajdg_nobot_blacklist_usernames = get_option('ajdg_nobot_blacklist_usernames');
+    $ajdg_nobot_blacklist_usernames = implode("\n", $ajdg_nobot_blacklist_usernames);
 	$ajdg_nobot_blacklist_protect = get_option('ajdg_nobot_blacklist_protect');
 
     $ajdg_nobot_blacklist_message = get_option('ajdg_nobot_blacklist_message');
@@ -582,36 +604,26 @@ function ajdg_nobot_dashboard() {
 						<h2 class="ajdg-postbox-title"><?php _e('No-Bot Registration', 'ajdg-nobot'); ?></h2>
 						<div id="stats" class="ajdg-postbox-content">
 							<p><strong><?php _e('Get help with No-Bot Registration', 'ajdg-nobot'); ?></strong></p>
-							<p><?php _e('If you have any questions about using No-Bot Registration please post it on my support forum. Always happy to help!', 'ajdg-nobot'); ?></p>
+							<p><?php _e('Use the buttons below if you have any questions about using No-Bot Registration. I am always happy to help!', 'ajdg-nobot'); ?></p>
 
-							<p><a class="button-primary" href="https://support.ajdg.net/" target="_blank" title="<?php _e('AJdG Solutions support pages', 'ajdg-nobot'); ?>"><?php _e('AJdG Solutions support', 'ajdg-nobot'); ?></a> <a class="button-secondary" href="https://wordpress.org/support/plugin/no-bot-registration/" target="_blank" title="<?php _e('Forum on wordpress.org', 'ajdg-nobot'); ?>"><?php _e('Forum on wordpress.org', 'ajdg-nobot'); ?></a></p>
+							<p><a class="button-primary" href="https://ajdg.solutions/product/support-ticket/" target="_blank" title="<?php _e('Buy support ticket', 'ajdg-nobot'); ?>"><?php _e('Buy a support ticket', 'ajdg-nobot'); ?></a> <a class="button-primary" href="https://support.ajdg.net/knowledgebase.php?category=16" target="_blank" title="<?php _e('Knowledgebase', 'ajdg-nobot'); ?>"><?php _e('Knowledgebase', 'ajdg-nobot'); ?></a> <a class="button-secondary" href="https://wordpress.org/support/plugin/no-bot-registration/" target="_blank" title="<?php _e('Forum on wordpress.org', 'ajdg-nobot'); ?>"><?php _e('Forum on wordpress.org', 'ajdg-nobot'); ?></a></p>
 
 							<p><strong><?php _e('Support No-Bot Registration', 'ajdg-nobot'); ?></strong></p>
 							<p><?php _e('Consider writing a review or making a donation if you like the plugin or if you find the plugin useful. Thanks for your support!', 'ajdg-nobot'); ?></p>
 
-							<p><a class="button-primary" href="https://www.arnan.me/donate.html" target="_blank" title="<?php _e('Support me with a token of thanks', 'ajdg-nobot'); ?>"><?php _e('Gift a token of thanks', 'ajdg-nobot'); ?></a> <a class="button-secondary" href="https://wordpress.org/support/plugin/no-bot-registration/reviews?rate=5#postform" target="_blank" title="<?php _e('Write review on wordpress.org', 'ajdg-nobot'); ?>"><?php _e('Write review on wordpress.org', 'ajdg-nobot'); ?></a></p>
+							<p><a class="button-primary" href="https://ajdg.solutions/product/token-of-thanks/" target="_blank" title="<?php _e('Support me with a token of thanks', 'ajdg-nobot'); ?>"><?php _e('Gift a token of thanks', 'ajdg-nobot'); ?></a> <a class="button-secondary" href="https://wordpress.org/support/plugin/no-bot-registration/reviews?rate=5#postform" target="_blank" title="<?php _e('Write review on wordpress.org', 'ajdg-nobot'); ?>"><?php _e('Write review on wordpress.org', 'ajdg-nobot'); ?></a></p>
 
 							<p><strong><?php _e('Plugins and services', 'ajdg-nobot'); ?></strong></p>
 							<table width="100%">
 								<tr>
-									<td width="33%">
+									<td width="50%">
 										<div class="ajdg-sales-widget" style="display: inline-block; margin-right:2%;">
 											<a href="https://ajdg.solutions/product/adrotate-pro-single/" target="_blank"><div class="header"><img src="<?php echo plugins_url("/images/offers/monetize-your-site.jpg", __FILE__); ?>" alt="AdRotate Professional" width="228" height="120"></div></a>
 											<a href="https://ajdg.solutions/product/adrotate-pro-single/" target="_blank"><div class="title"><?php _e('AdRotate Professional', 'ajdg-nobot'); ?></div></a>
 											<div class="sub_title"><?php _e('WordPress Plugin', 'ajdg-nobot'); ?></div>
 											<div class="cta"><a role="button" class="cta_button" href="https://ajdg.solutions/product/adrotate-pro-single/" target="_blank">Starting at &euro; 39,-</a></div>
 											<hr>
-											<div class="description"><?php _e('Place Adsense Ads and any other kind of advert on your WordPress and ClassicPress website.', 'ajdg-nobot'); ?></div>
-										</div>
-									</td>
-									<td width="33%">
-										<div class="ajdg-sales-widget" style="display: inline-block; margin-right:2%;">
-											<a href="https://ajdg.solutions/product/wordpress-maintenance-and-updates/" target="_blank"><div class="header"><img src="<?php echo plugins_url("/images/offers/wordpress-maintenance.jpg", __FILE__); ?>" alt="WordPress Maintenance" width="228" height="120"></div></a>
-											<a href="https://ajdg.solutions/product/wordpress-maintenance-and-updates/" target="_blank"><div class="title"><?php _e('WP Maintenance', 'ajdg-nobot'); ?></div></a>
-											<div class="sub_title"><?php _e('Professional service', 'ajdg-nobot'); ?></div>
-											<div class="cta"><a role="button" class="cta_button" href="https://ajdg.solutions/product/wordpress-maintenance-and-updates/" target="_blank">Starting at &euro; 22,50</a></div>
-											<hr>
-											<div class="description"><?php _e('Get all the latest updates for WordPress and plugins. Maintenance, delete spam and clean up files.', 'ajdg-nobot'); ?></div>
+											<div class="description"><?php _e('Place any kind of advert including those from Google Adsense or affiliate links on your WordPress and ClassicPress website.', 'ajdg-nobot'); ?></div>
 										</div>
 									</td>
 									<td>
@@ -621,7 +633,7 @@ function ajdg_nobot_dashboard() {
 											<div class="sub_title"><?php _e('WordPress and ClassicPress', 'ajdg-nobot'); ?></div>
 											<div class="cta"><a role="button" class="cta_button" href="https://ajdg.solutions/plugins/" target="_blank">View now</a></div>
 											<hr>
-											<div class="description"><?php _e('Plugins for WordPres, ClassicPress, WooCommerce and bbPress.', 'ajdg-nobot'); ?></div>
+											<div class="description"><?php _e('Excellent plugins for WordPres, ClassicPress, WooCommerce and bbPress. Most of them are completely FREE to use!', 'ajdg-nobot'); ?></div>
 										</div>
 									</td>
 								</tr>
@@ -697,10 +709,12 @@ function ajdg_nobot_dashboard() {
 								<p><textarea name='ajdg_nobot_blacklist_message' cols='70' rows='2' style="width: 100%"><?php echo stripslashes($ajdg_nobot_blacklist_message); ?></textarea><br /><em><?php _e('This message is shown to users who are not allowed to register on your site. Keep it short and simple.', 'ajdg-nobot'); ?></em></p>
 
 								<p><strong><?php _e('Blacklisted emails:', 'ajdg-nobot'); ?></strong></p>
-								<p><textarea name='ajdg_nobot_blacklist' cols='70' rows='10' style="width: 100%"><?php echo stripslashes($ajdg_nobot_blacklist); ?></textarea><br /><?php _e('You can add: full emails (someone@hotmail.com), domains (hotmail.com) or simply a keyword (hotmail).', 'ajdg-nobot'); ?> <?php _e('One item per line! Add as many items as you need.', 'ajdg-nobot'); ?><br /><em><strong><?php _e('Caution:', 'ajdg-nobot'); ?></strong> <?php _e('This is a powerful filter matching partial words. So banning "mail" will also block Gmail users!', 'ajdg-nobot'); ?></em></p>
+								<p><textarea name='ajdg_nobot_blacklist' cols='70' rows='10' style="width: 100%"><?php echo stripslashes($ajdg_nobot_blacklist); ?></textarea><br /><?php _e('Comma separated, and/or one item per line! Add as many as you need.', 'ajdg-nobot'); ?><br /><strong><?php _e('Caution:', 'ajdg-nobot'); ?></strong> <?php _e('This is a powerful filter matching partial words. So banning "mail" will also block Gmail users!', 'ajdg-nobot'); ?></p>
+								<p><strong><?php _e('You can add:', 'ajdg-nobot'); ?></strong> <?php _e('full emails (someone@hotmail.com), domains (hotmail.com) or simply a keyword (hotmail).', 'ajdg-nobot'); ?><br /><strong><?php _e('Default:', 'ajdg-nobot'); ?></strong> hotmail, yahoo, .cn, .info, .biz, .xyz, .ws.</em></p>
 
 								<p><strong><?php _e('Blacklisted usernames:', 'ajdg-nobot'); ?></strong></p>
-								<p><textarea name='ajdg_nobot_blacklist_usernames' cols='70' rows='10' style="width: 100%"><?php echo stripslashes($ajdg_nobot_blacklist_usernames); ?></textarea><br /><?php _e('One item per line! Add as many as you need.', 'ajdg-nobot'); ?><br /><em><strong><?php _e('Caution:', 'ajdg-nobot'); ?></strong> <?php _e('This is a powerful filter matching partial words. So banning "web" will also block webmaster!', 'ajdg-nobot'); ?></em></p>
+								<p><textarea name='ajdg_nobot_blacklist_usernames' cols='70' rows='10' style="width: 100%"><?php echo stripslashes($ajdg_nobot_blacklist_usernames); ?></textarea><br /><?php _e('Comma separated, and/or one item per line! Add as many as you need.', 'ajdg-nobot'); ?><br /><strong><?php _e('Caution:', 'ajdg-nobot'); ?></strong> <?php _e('This is a powerful filter matching partial words. So banning "web" will also block webmaster!', 'ajdg-nobot'); ?></p>
+								<p><strong><?php _e('Default:', 'ajdg-nobot'); ?></strong> subscriber, editor, admin, superadmin, author, customer, contributor, administrator, shop manager, shopmanager, email, ecommerce, forum, forums, feedback, follow, guest, httpd, https, information, invite, knowledgebase, lists, webmaster, yourname, support, team.</em></p>
 
 								<p><strong><?php _e('Need more protection against fake accounts?', 'ajdg-nobot'); ?></strong></p>
 								<p><?php _e('Add a few restrictions on how usernames are formatted. This helps against automated bots and manual entry fake accounts.', 'ajdg-nobot'); ?></p>

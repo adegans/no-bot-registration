@@ -3,8 +3,8 @@ Contributors: adegans
 Tags: antispam, protection, fake account, comment spam, security
 Donate link: https://www.arnan.me/donate.html
 Requires at least: 4.9
-Tested up to: 6.7.2
-Stable tag: 2.1.2
+Tested up to: 6.8
+Stable tag: 2.2
 License: GPLv3
 
 Prevent bots from creating accounts by blacklisting domains and usernames and present people with a human friendly security question.
@@ -12,7 +12,8 @@ Prevent bots from creating accounts by blacklisting domains and usernames and pr
 == Description ==
 Tired of spam bots in your WordPress and ClassicPress website? Do you want to get rid of false registrations and other spammy nonsense? Don't wan't to use a clumsy and user-unfriendly Captcha? Don't want to use a Captcha from Google or other big-tech company period?
 
-Meet **No-Bot Registration**, easy to use, superior protection without making it hard for your visitors. Easily blacklist (partial) email addresses and domains so they can no longer register an account. \
+Meet **No-Bot Registration**, easy to use, superior protection without making it hard for your visitors. Easily blacklist (partial) email addresses and domains so they can no longer register an account.
+
 Create one or more questions and a set of possible answers for them and visitors have to answer your question when they register.
 If they answer wrong, they get denied their account.
 
@@ -28,6 +29,13 @@ Questions can be as simple as "1 + 1", with possible answers being 1, one or uno
 * Configurable notification messages for users failing the security tests
 
 == Changelog ==
+
+= 2.2 - April 10, 2025 =
+* [fix] Username blacklist not always saving correctly
+* [update] Better filter for email block list keywords
+* [update] Added .xyz and .ws to default email block list
+* [update] Reorganized how default email block list is set up when plugin activates
+* [change] Dashboard tweaks
 
 = 2.1.2 - March 4, 2025 =
 * [tested] with WordPress 6.7
