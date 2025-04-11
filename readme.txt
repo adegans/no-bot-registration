@@ -4,7 +4,7 @@ Tags: antispam, protection, fake account, comment spam, security
 Donate link: https://www.arnan.me/donate.html
 Requires at least: 4.9
 Tested up to: 6.8
-Stable tag: 2.2
+Stable tag: 2.3
 License: GPLv3
 
 Prevent bots from creating accounts by blacklisting domains and usernames and present people with a human friendly security question.
@@ -29,6 +29,13 @@ Questions can be as simple as "1 + 1", with possible answers being 1, one or uno
 * Configurable notification messages for users failing the security tests
 
 == Changelog ==
+
+= 2.3 - April 11, 2025 =
+* [tested] with WordPress 6.8
+* [change] Dashboard tweaks
+* [update] Updated dashboard layout
+* [update] Updated underlying save code
+* [update] Action links
 
 = 2.2 - April 10, 2025 =
 * [fix] Username blacklist not always saving correctly
@@ -201,7 +208,7 @@ Questions can be as simple as "1 + 1", with possible answers being 1, one or uno
 == Frequently Asked Questions ==
 
 = I need help with this plugin =
-Check out my [Support system](https://support.ajdg.net/)
+Check out my [Support system](https://support.ajdg.net/knowledgebase.php)
 
 = This is cool, do you have more plugins? =
 Yep, check out my website [AJdG Solutions](https://ajdg.solutions/plugins/)
