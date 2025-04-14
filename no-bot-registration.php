@@ -6,7 +6,7 @@ Author: Arnan de Gans
 Author URI: https://www.arnan.me/
 Description: Prevent people from registering by blacklisting emails and present people with a security question when registering or posting a comment.
 Text Domain: ajdg-nobot
-Version: 2.3
+Version: 2.3.1
 License: GPLv3
 */
 

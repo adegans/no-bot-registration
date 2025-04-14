@@ -1,18 +1,7 @@
 <?php
-/*
-Plugin Name: No-Bot Registration
-Plugin URI: https://ajdg.solutions/product/no-bot-registration/
-Author: Arnan de Gans
-Author URI: https://www.arnan.me/
-Description: Prevent people from registering by blacklisting emails and present people with a security question when registering or posting a comment.
-Text Domain: ajdg-nobot
-Version: 2.2
-License: GPLv3
-*/
-
 /* ------------------------------------------------------------------------------------
 *  COPYRIGHT NOTICE
-*  Copyright 2014-2025 Arnan de Gans. All Rights Reserved.
+*  Copyright 2017-2025 Arnan de Gans. All Rights Reserved.
 
 *  COPYRIGHT NOTICES AND ALL THE COMMENTS SHOULD REMAIN INTACT.
 *  By using this code you agree to indemnify Arnan de Gans from any
@@ -35,7 +24,7 @@ function ajdg_nobot_activate() {
 	add_option('ajdg_nobot_answers', array(array('nine','9')));
 
 	add_option('ajdg_nobot_blacklist_message', 'Your email has been banned from registration! Try using another email address or contact support for a solution.');
-	add_option('ajdg_nobot_blacklist_usernames', implode("\n", array('subscriber', 'editor', 'admin', 'superadmin', 'author', 'customer', 'contributor', 'administrator', 'shop manager', 'shopmanager', 'email', 'ecommerce', 'forum', 'forums', 'feedback', 'follow', 'guest', 'httpd', 'https', 'information', 'invite', 'knowledgebase', 'lists', 'webmaster', 'yourname', 'support', 'team')));
+	add_option('ajdg_nobot_blacklist_usernames', array('subscriber', 'editor', 'admin', 'superadmin', 'author', 'customer', 'contributor', 'administrator', 'shop manager', 'shopmanager', 'email', 'ecommerce', 'forum', 'forums', 'feedback', 'follow', 'guest', 'httpd', 'https', 'information', 'invite', 'knowledgebase', 'lists', 'webmaster', 'yourname', 'support', 'team'));
 	add_option('ajdg_nobot_blacklist_protect', array('namelength' => 0, 'nameisemail' => 0, 'emailperiods' => 0, 'namespaces' => 0));
 
 	add_option('ajdg_nobot_hide_review', current_time('timestamp'));
@@ -496,12 +485,11 @@ function ajdg_nobot_blacklist($errors, $user_login, $user_email) {
 	} else {
 		$blacklist = get_option('blacklist_keys'); // wp core option
 	}
-    $blacklist_usernames = get_option('ajdg_nobot_blacklist_usernames');
+    $blacklist_usernames_array = get_option('ajdg_nobot_blacklist_usernames');
     $blacklist_message = get_option('ajdg_nobot_blacklist_message');
     $blacklist_protect = get_option('ajdg_nobot_blacklist_protect');
 
     $blacklist_array = explode("\n", $blacklist);
-    $blacklist_usernames_array = explode("\n", $blacklist_usernames);
 
 	if(count($blacklist_usernames_array) > 0) {
 		if(

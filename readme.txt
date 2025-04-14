@@ -4,7 +4,7 @@ Tags: antispam, protection, fake account, comment spam, security
 Donate link: https://www.arnan.me/donate.html
 Requires at least: 4.9
 Tested up to: 6.8
-Stable tag: 2.3
+Stable tag: 2.3.1
 License: GPLv3
 
 Prevent bots from creating accounts by blacklisting domains and usernames and present people with a human friendly security question.
@@ -29,6 +29,10 @@ Questions can be as simple as "1 + 1", with possible answers being 1, one or uno
 * Configurable notification messages for users failing the security tests
 
 == Changelog ==
+
+= 2.3.1 - April 14, 2025 =
+* [fix] Username blacklist not saving as array on some installations
+* [fix] Double plugin header
 
 = 2.3 - April 11, 2025 =
 * [tested] with WordPress 6.8
