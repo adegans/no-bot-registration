@@ -1,7 +1,7 @@
 <?php
 /* ------------------------------------------------------------------------------------
 *  COPYRIGHT NOTICE
-*  Copyright 2017-2025 Arnan de Gans. All Rights Reserved.
+*  Copyright 2017-2026 Arnan de Gans. All Rights Reserved.
 
 *  COPYRIGHT NOTICES AND ALL THE COMMENTS SHOULD REMAIN INTACT.
 *  By using this code you agree to indemnify Arnan de Gans from any
@@ -72,6 +72,7 @@ function ajdg_nobot_deactivate() {
  Since:		1.0
 -------------------------------------------------------------*/
 function ajdg_nobot_init() {
+	load_plugin_textdomain('no-bot-registration', false, 'no-bot-registration/language');
 	wp_enqueue_script('jquery', false, false, false, true);
 }
 
@@ -81,9 +82,9 @@ function ajdg_nobot_init() {
  Since:		1.0
 -------------------------------------------------------------*/
 function ajdg_nobot_action_links($links) {
-	$links['nobot-settings'] = sprintf('<a href="%s">%s</a>', admin_url('tools.php?page=ajdg-nobot-settings'), 'Settings');
-	$links['nobot-help'] = sprintf('<a href="%s" target="_blank">%s</a>', 'https://support.ajdg.net/knowledgebase.php', 'Support');
-	$links['nobot-plugins'] = sprintf('<a href="%s" target="_blank">%s</a>', 'https://ajdg.solutions/plugins/', 'More plugins');
+	$links['nobot-settings'] = sprintf('<a href="%s">%s</a>', admin_url('tools.php?page=ajdg-nobot-settings'), __('Settings', 'no-bot-registration'));
+	$links['nobot-help'] = sprintf('<a href="%s" target="_blank">%s</a>', 'https://support.ajdg.net/knowledgebase.php', __('Support', 'no-bot-registration'));
+	$links['nobot-plugins'] = sprintf('<a href="%s" target="_blank">%s</a>', 'https://ajdg.solutions/plugins/', __('More plugins', 'no-bot-registration'));
 
 	return $links;
 }
@@ -115,15 +116,15 @@ function ajdg_nobot_status($status) {
 
 	switch($status) {
 		case '100' :
-			echo '<div class="updated"><p>'.__('Settings saved', 'ajdg-nobot').'</p></div>';
+			echo '<div class="updated"><p>'.__('Settings saved', 'no-bot-registration').'</p></div>';
 		break;
 
 		case '101' :
-			echo '<div class="updated"><p>'.__('Blacklist settings saved', 'ajdg-nobot').'</p></div>';
+			echo '<div class="updated"><p>'.__('Blacklist settings saved', 'no-bot-registration').'</p></div>';
 		break;
 
 		default :
-			echo '<div class="error"><p>'.__('Unexpected error', 'ajdg-nobot').'</p></div>';
+			echo '<div class="error"><p>'.__('Unexpected error', 'no-bot-registration').'</p></div>';
 		break;
 	}
 }
@@ -190,7 +191,7 @@ function ajdg_nobot_field($context = 'comment') {
 		$answers = get_option('ajdg_nobot_answers');
 		$selected_id = rand(0, count($questions)-1);
 		?>
-		<label for="ajdg_nobot_answer"><?php echo htmlspecialchars($questions[$selected_id]); ?> <?php _e('(Required)', 'ajdg-nobot'); ?></label>
+		<label for="ajdg_nobot_answer"><?php echo htmlspecialchars($questions[$selected_id]); ?> <?php _e('(Required)', 'no-bot-registration'); ?></label>
 		<input id="ajdg_nobot_answer" name="ajdg_nobot_answer" type="text" value="" size="30"/>
 		<input type="hidden" name="ajdg_nobot_id" value="<?php echo $selected_id; ?>" />
 		<input type="hidden" name="ajdg_nobot_hash" value="<?php echo ajdg_nobot_security_hash($selected_id, $questions[$selected_id], $answers[$selected_id]); ?>" />
@@ -547,24 +548,33 @@ function ajdg_nobot_template($id, $question, $answers) {
 	$id = intval($id);
 ?>
 	<fieldset class="ajdg_nobot_row_<?php echo $id; ?>">
-		<p class="ajdg_nobot_row_<?php echo $id; ?>"><strong><?php _e('Question:', 'ajdg-nobot'); ?></strong></p>
-		<p><input type="input" name="ajdg_nobot_question_<?php echo $id; ?>" size="50" style="width: 75%;" value="<?php echo htmlspecialchars($question); ?>" placeholder="<?php _e('Type here to add a new question', 'ajdg-nobot'); ?>" /> <a href="javascript:void(0)" onclick="ajdg_nobot_delete_entire_question(&quot;<?php echo $id; ?>&quot;)"><?php _e('Delete Question', 'ajdg-nobot'); ?></a></p>
+		<p>
+			<strong><?php _e('Question:', 'no-bot-registration'); ?></strong>
+		</p>
+
+		<p>
+			<input type="text" name="ajdg_nobot_question_<?php echo $id; ?>" size="50" style="width: 75%; margin:4px 1px;" value="<?php echo htmlspecialchars($question); ?>" placeholder="<?php _e('Type here to add a new question', 'no-bot-registration'); ?>" /> &cross; <a href="javascript:void(0)" onclick="ajdg_nobot_delete_entire_question(&quot;<?php echo $id; ?>&quot;)"><?php _e('Remove Question', 'no-bot-registration'); ?></a>
+		</p>
 	
-		<?php if(count($answers) === 0 AND !empty($question)) echo "<p style=\"color: #F00;\"><strong>".__('This question has no answers! Add at least one answer or remove the question.', 'ajdg-nobot')."</strong></p>"; ?>
+		<?php if(count($answers) === 0 AND !empty($question)) echo "<p style=\"color: #F00;\"><strong>".__('This question has no answers! Add at least one answer or remove the question.', 'no-bot-registration')."</strong></p>"; ?>
 	
-		<p><strong><?php _e('Possible Answers:', 'ajdg-nobot'); ?></strong><br /><em><?php _e('Answers are case-insensitive.', 'ajdg-nobot'); ?></em></p>
+		<p>
+			<strong><?php _e('Possible Answers:', 'no-bot-registration'); ?></strong><br />
+			<em><?php _e('Variations of the same answer help with user interpretation. Answers are case-insensitive.', 'no-bot-registration'); ?></em>
+		</p>
+
 		<p>
 			<?php
 			$i = 0;
 			foreach($answers as $value) {
 				echo '<span id="ajdg_nobot_answer_'.$id.'_'.$i.'">';
-				echo '<input type="input" id="ajdg_nobot_answer_'.$id.'_'.$i.'" name="ajdg_nobot_answers_'.$id.'[]" size="50" style="width: 75%;" value="'.htmlspecialchars($value).'" /> <a href="javascript:void(0)" onclick="ajdg_nobot_delete(&quot;'.$id.'&quot;, &quot;'.$i.'&quot;)">Delete Answer</a>';
+				echo '<input type="text" id="ajdg_nobot_answer_'.$id.'_'.$i.'" name="ajdg_nobot_answers_'.$id.'[]" size="50" style="width:75%; margin:4px 1px;" value="'.htmlspecialchars($value).'" /> &cross; <a href="javascript:void(0)" onclick="ajdg_nobot_delete(&quot;'.$id.'&quot;, &quot;'.$i.'&quot;)">'.__('Remove Answer', 'no-bot-registration').'</a>';
 				echo '</span><br />';
 				$i++;
 			}
 			echo '<script id="ajdg_nobot_placeholder_'.$id.'">ct['.$id.'] = '.$i.';</script>';
 			?>
-			&nbsp;<a href="javascript:void(0)" onclick="return ajdg_nobot_add_newitem(<?php echo $id; ?>)"><?php _e('Add Possible Answer', 'ajdg-nobot'); ?></a>
+			&nbsp;&nbsp;&rdca;&nbsp;<a href="javascript:void(0)" onclick="return ajdg_nobot_add_newitem(<?php echo $id; ?>)"><?php _e('Add Possible Answer', 'no-bot-registration'); ?></a>
 		</p>
 	</fieldset>
 <?php
@@ -600,9 +610,9 @@ function ajdg_nobot_notifications_dashboard() {
  Since:		1.0
 -------------------------------------------------------------*/
 function ajdg_nobot_nonce_error() {
-	echo '	<h2 style="text-align: center;">'.__('Oh no! Something went wrong!', 'ajdg-nobot').'</h2>';
-	echo '	<p style="text-align: center;">'.__('WordPress was unable to verify the authenticity of the url you have clicked. Verify if the url used is valid or log in via your browser.', 'ajdg-nobot').'</p>';
-	echo '	<p style="text-align: center;">'.__('If you have received the url you want to visit via email, you are being tricked!', 'ajdg-nobot').'</p>';
-	echo '	<p style="text-align: center;">'.__('Contact support if the issue persists:', 'ajdg-nobot').' <a href="https://support.ajdg.net/" title="AJdG Solutions Support" target="_blank">Support forum</a>.</p>';
+	echo '	<h2 style="text-align: center;">'.__('Oh no! Something went wrong!', 'no-bot-registration').'</h2>';
+	echo '	<p style="text-align: center;">'.__('WordPress was unable to verify the authenticity of the url you have clicked. Verify if the url used is valid or log in via your browser.', 'no-bot-registration').'</p>';
+	echo '	<p style="text-align: center;">'.__('If you have received the url you want to visit via email, you are being tricked!', 'no-bot-registration').'</p>';
+	echo '	<p style="text-align: center;">'.__('Contact support if the issue persists:', 'no-bot-registration').' <a href="https://support.ajdg.net/" title="AJdG Solutions Support" target="_blank">AJdG Solutions Support</a>.</p>';
 }
 ?>

@@ -5,14 +5,14 @@ Plugin URI: https://ajdg.solutions/product/no-bot-registration/
 Author: Arnan de Gans
 Author URI: https://www.arnan.me/
 Description: Prevent people from registering by blacklisting emails and present people with a security question when registering or posting a comment.
-Text Domain: ajdg-nobot
-Version: 2.3.1
+Domain Path: /language
+Version: 2.4
 License: GPLv3
 */
 
 /* ------------------------------------------------------------------------------------
 *  COPYRIGHT NOTICE
-*  Copyright 2017-2025 Arnan de Gans. All Rights Reserved.
+*  Copyright 2017-2026 Arnan de Gans. All Rights Reserved.
 
 *  COPYRIGHT NOTICES AND ALL THE COMMENTS SHOULD REMAIN INTACT.
 *  By using this code you agree to indemnify Arnan de Gans from any
@@ -29,7 +29,6 @@ require_once($plugin_folder.'/no-bot-registration-functions.php');
 /*--- Core --------------------------------------------------*/
 register_activation_hook(__FILE__, 'ajdg_nobot_activate');
 register_uninstall_hook(__FILE__, 'ajdg_nobot_deactivate');
-load_plugin_textdomain('ajdg-nobot', false, 'no-bot-registration/language');
 /*-----------------------------------------------------------*/
 
 /*--- Front end ---------------------------------------------*/
@@ -87,7 +86,7 @@ function ajdg_nobot_dashboard() {
 	if(isset($_GET['status'])) $status = esc_attr($_GET['status']);
 ?>
 	<div class="wrap">
-		<h1><?php _e('No-Bot Registration', 'ajdg-nobot'); ?></h1>
+		<h1><?php _e('No-Bot Registration', 'no-bot-registration'); ?></h1>
 
 		<?php
 		if($status > 0) ajdg_nobot_status($status);
