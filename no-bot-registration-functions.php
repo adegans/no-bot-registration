@@ -13,7 +13,6 @@ defined('ABSPATH') or die();
 /*-------------------------------------------------------------
  Name:      ajdg_nobot_activate
  Purpose: 	Activation/setup script
- Since:		1.0
 -------------------------------------------------------------*/
 function ajdg_nobot_activate() {
 	global $wp_version;
@@ -26,8 +25,6 @@ function ajdg_nobot_activate() {
 	add_option('ajdg_nobot_blacklist_message', 'Your email has been banned from registration! Try using another email address or contact support for a solution.');
 	add_option('ajdg_nobot_blacklist_usernames', array('subscriber', 'editor', 'admin', 'superadmin', 'author', 'customer', 'contributor', 'administrator', 'shop manager', 'shopmanager', 'email', 'ecommerce', 'forum', 'forums', 'feedback', 'follow', 'guest', 'httpd', 'https', 'information', 'invite', 'knowledgebase', 'lists', 'webmaster', 'yourname', 'support', 'team'));
 	add_option('ajdg_nobot_blacklist_protect', array('namelength' => 0, 'nameisemail' => 0, 'emailperiods' => 0, 'namespaces' => 0));
-
-	add_option('ajdg_nobot_hide_review', current_time('timestamp'));
 
 	if(version_compare($wp_version, '5.5.0', '>=')) {
 		$blacklist = explode("\n", get_option('disallowed_keys')); // wp core option
@@ -51,7 +48,6 @@ function ajdg_nobot_activate() {
 /*-------------------------------------------------------------
  Name:      ajdg_nobot_deactivate
  Purpose: 	uninstall script
- Since:		1.0
 -------------------------------------------------------------*/
 function ajdg_nobot_deactivate() {
 	delete_option('ajdg_nobot_protect');
@@ -61,37 +57,44 @@ function ajdg_nobot_deactivate() {
 	delete_option('ajdg_nobot_blacklist_message');
 	delete_option('ajdg_nobot_blacklist_protect');
 	delete_option('ajdg_nobot_blacklist_usernames');
-	delete_option('ajdg_nobot_hide_review');
-
-	delete_option('ajdg_activate_no-bot-registration'); // Obsolete
+	delete_option('ajdg_nobot_hide_review'); // Obsolete in 2.5
+	delete_option('ajdg_activate_no-bot-registration'); // Must match slug
+	delete_transient('ajdg_update_no-bot-registration'); // Must match slug
 }
 
 /*-------------------------------------------------------------
  Name:      ajdg_nobot_init
  Purpose: 	Initialize
- Since:		1.0
 -------------------------------------------------------------*/
 function ajdg_nobot_init() {
-	load_plugin_textdomain('no-bot-registration', false, 'no-bot-registration/language');
+	load_plugin_textdomain('no-bot-registration', false, 'no-bot-registration/languages');
 	wp_enqueue_script('jquery', false, false, false, true);
 }
 
 /*-------------------------------------------------------------
- Name:      ajdg_nobot_action_links
- Purpose:	Plugin page link
- Since:		1.0
+ Name:      ajdg_nobot_dashboard_styles
+ Purpose: 	Add security field to comment form
 -------------------------------------------------------------*/
-function ajdg_nobot_action_links($links) {
-	$links['nobot-settings'] = sprintf('<a href="%s">%s</a>', admin_url('tools.php?page=ajdg-nobot-settings'), __('Settings', 'no-bot-registration'));
-	$links['nobot-help'] = sprintf('<a href="%s" target="_blank">%s</a>', 'https://support.ajdg.net/knowledgebase.php', __('Support', 'no-bot-registration'));
-	$links['nobot-plugins'] = sprintf('<a href="%s" target="_blank">%s</a>', 'https://ajdg.solutions/plugins/', __('More plugins', 'no-bot-registration'));
+function ajdg_nobot_dashboard_styles() {
+	wp_enqueue_style('ajdg-nobot-admin-stylesheet', plugins_url('library/dashboard.css', __FILE__));
+}
+
+/*-------------------------------------------------------------
+ Name:	  	ajdg_nobot_meta_links
+ Purpose:	Extra links on the plugins dashboard page
+-------------------------------------------------------------*/
+function ajdg_nobot_meta_links($links, $file) {
+	if($file !== 'no-bot-registration/no-bot-registration.php') return $links;
+	
+	$links['ajdg-settings'] = sprintf('<a href="%s">%s</a>', admin_url('tools.php?page=ajdg-nobot-settings'), 'Settings');
+	$links['ajdg-help'] = sprintf('<a href="%s" target="_blank">%s</a>', 'https://support.ajdg.net/knowledgebase.php', 'Plugin Support');
+	$links['ajdg-more'] = sprintf('<a href="%s" target="_blank">%s</a>', 'https://ajdg.solutions/plugins/', 'More plugins');	
 
 	return $links;
 }
 
 /*-------------------------------------------------------------
  Name:      ajdg_nobot_return
- Since:		1.0
 -------------------------------------------------------------*/
 function ajdg_nobot_return($page, $status, $args = null) {
 
@@ -109,18 +112,13 @@ function ajdg_nobot_return($page, $status, $args = null) {
 }
 
 /*-------------------------------------------------------------
- Name:      ajdg_matomo_status
- Since:		1.0
+ Name:      ajdg_nobot_status
 -------------------------------------------------------------*/
 function ajdg_nobot_status($status) {
 
 	switch($status) {
 		case '100' :
 			echo '<div class="updated"><p>'.__('Settings saved', 'no-bot-registration').'</p></div>';
-		break;
-
-		case '101' :
-			echo '<div class="updated"><p>'.__('Blacklist settings saved', 'no-bot-registration').'</p></div>';
 		break;
 
 		default :
@@ -130,18 +128,8 @@ function ajdg_nobot_status($status) {
 }
 
 /*-------------------------------------------------------------
- Name:      ajdg_nobot_dashboard_styles
- Purpose: 	Add security field to comment form
- Since:		1.0
--------------------------------------------------------------*/
-function ajdg_nobot_dashboard_styles() {
-	wp_enqueue_style('ajdg-nobot-admin-stylesheet', plugins_url('library/dashboard.css', __FILE__));
-}
-
-/*-------------------------------------------------------------
  Name:      ajdg_nobot_comment_field
  Purpose: 	Add security field to comment form
- Since:		1.0
 -------------------------------------------------------------*/
 function ajdg_nobot_comment_field() {
 	$protect = get_option('ajdg_nobot_protect');
@@ -154,7 +142,6 @@ function ajdg_nobot_comment_field() {
 /*-------------------------------------------------------------
  Name:      ajdg_nobot_registration_field
  Purpose: 	Add security field to registration form
- Since:		1.0
 -------------------------------------------------------------*/
 function ajdg_nobot_registration_field() {
 	$protect = get_option('ajdg_nobot_protect');
@@ -167,7 +154,6 @@ function ajdg_nobot_registration_field() {
 /*-------------------------------------------------------------
  Name:      ajdg_nobot_woocommerce_field
  Purpose: 	Add security field to WooCommerce Checkout
- Since:		1.0
 -------------------------------------------------------------*/
 function ajdg_nobot_woocommerce_field() {
 	$protect = get_option('ajdg_nobot_protect');
@@ -180,7 +166,6 @@ function ajdg_nobot_woocommerce_field() {
 /*-------------------------------------------------------------
  Name:      ajdg_nobot_field
  Purpose: 	Format the security field and put a random question in there
- Since:		1.0
 -------------------------------------------------------------*/
 function ajdg_nobot_field($context = 'comment') {
 	if(current_user_can('editor') OR current_user_can('administrator')) return;
@@ -207,7 +192,6 @@ function ajdg_nobot_field($context = 'comment') {
 /*-------------------------------------------------------------
  Name:      ajdg_nobot_check_comment
  Purpose: 	Inject error filter and fail if errors are generated
- Since:		1.8
 -------------------------------------------------------------*/
 function ajdg_nobot_check_comment($commentdata) {
 	if($commentdata['comment_type'] == 'pingback' OR $commentdata['comment_type'] == 'trackback') {
@@ -235,7 +219,6 @@ function ajdg_nobot_check_comment($commentdata) {
 /*-------------------------------------------------------------
  Name:      ajdg_nobot_check_registration
  Purpose: 	Check user registration for WP
- Since:		1.8.2
 -------------------------------------------------------------*/
 function ajdg_nobot_check_registration($errors, $user_login, $user_email) {
 	$protect = get_option('ajdg_nobot_protect');
@@ -250,7 +233,6 @@ function ajdg_nobot_check_registration($errors, $user_login, $user_email) {
 /*-------------------------------------------------------------
  Name:      ajdg_nobot_check_woocommerce
  Purpose: 	Check user registration for WC/CC
- Since:		1.8.2
 -------------------------------------------------------------*/
 function ajdg_nobot_check_woocommerce($errors, $user_login, $user_email) {
 	$protect = get_option('ajdg_nobot_protect');
@@ -265,7 +247,6 @@ function ajdg_nobot_check_woocommerce($errors, $user_login, $user_email) {
 /*-------------------------------------------------------------
  Name:      ajdg_nobot_check_fields
  Purpose: 	Check the given answer and respond accordingly
- Since:		1.8
 -------------------------------------------------------------*/
 function ajdg_nobot_check_fields($errors) {
 	if(current_user_can('editor') OR current_user_can('administrator')) return $errors;
@@ -321,16 +302,15 @@ function ajdg_nobot_check_fields($errors) {
 }
 
 /*-------------------------------------------------------------
- Name:      ajdg_matomo_save_settings
- Since:		1.0
+ Name:      ajdg_nobot_save_settings
 -------------------------------------------------------------*/
 function ajdg_nobot_save_settings() {
 	global $wp_version;
 
 	if(!current_user_can('moderate_comments')) return;
 
-	if(isset($_POST['nobot_protection'])) {
-		if(wp_verify_nonce($_POST['ajdg_nobot_nonce'], 'ajdg_nobot_protection')) {
+	if(isset($_POST['nobot_protection_save_options'])) {
+		if(wp_verify_nonce($_POST['ajdg_nobot_nonce'], 'no-bot-registration')) {
 			$questions = $answers = $protect = array();
 	
 			$protect['registration'] = (isset($_POST['ajdg_nobot_registration'])) ? 1 : 0;
@@ -364,16 +344,6 @@ function ajdg_nobot_save_settings() {
 				update_option('ajdg_nobot_security_message', sanitize_text_field($_POST['ajdg_nobot_security_message']));
 			}
 	
-			ajdg_nobot_return('ajdg-nobot-settings', 100);
-			exit;
-		} else {
-			ajdg_nobot_nonce_error();
-			exit;
-		}
-	}
-
-	if(isset($_POST['nobot_blacklist'])) {
-		if(wp_verify_nonce($_POST['ajdg_nobot_nonce'], 'ajdg_nobot_blacklist')) {
 			if(isset($_POST['ajdg_nobot_blacklist_message'])) {
 				update_option('ajdg_nobot_blacklist_message', sanitize_text_field($_POST['ajdg_nobot_blacklist_message']));
 			}
@@ -382,21 +352,15 @@ function ajdg_nobot_save_settings() {
 				$blacklist_new_keys = strip_tags(htmlspecialchars($_POST['ajdg_nobot_blacklist'], ENT_QUOTES));
 				$blacklist_new_keys = str_replace(array("\r\n", "\r", "\n", ", "), ',', trim($blacklist_new_keys));
 				$blacklist_new_keys = explode(",", $blacklist_new_keys);
-	
-				$blacklist_keys_array = array();
-				foreach($blacklist_new_keys as $k => $key) {
-					if(!empty($key)) $blacklist_keys_array[] = $key;
-				}
-				unset($blacklist_new_keys, $k, $key);
-	
-				$blacklist_keys_array = array_unique($blacklist_keys_array);
-				sort($blacklist_keys_array);
-				$blacklist_keys_array = implode("\n", $blacklist_keys_array); // Must be string with newlines for WordPress...
+		
+				$blacklist_new_keys = array_unique(array_filter($blacklist_new_keys));
+				sort($blacklist_new_keys);
+				$blacklist_new_keys = implode("\n", $blacklist_new_keys); // Must be string with newlines for WordPress...
 	
 				if(version_compare($wp_version, '5.5.0', '>=')) {
-					update_option('disallowed_keys', $blacklist_keys_array);
+					update_option('disallowed_keys', $blacklist_new_keys);
 				} else {
-					update_option('blacklist_keys', $blacklist_keys_array);
+					update_option('blacklist_keys', $blacklist_new_keys);
 				}
 			}
 	
@@ -404,17 +368,10 @@ function ajdg_nobot_save_settings() {
 				$blacklist_new_usernames = strip_tags(htmlspecialchars($_POST['ajdg_nobot_blacklist_usernames'], ENT_QUOTES));
 				$blacklist_new_usernames = str_replace(array("\r\n", "\r", "\n", ", "), ',', trim($blacklist_new_usernames));
 				$blacklist_new_usernames = explode(",", $blacklist_new_usernames);
-				
-				$blacklist_usernames_array = array();
-				foreach($blacklist_new_usernames as $k => $username) {
-					if(!empty($username)) $blacklist_usernames_array[] = $username;
-				}
-				unset($blacklist_new_usernames, $k, $username);
-				
-				$blacklist_usernames_array = array_unique($blacklist_usernames_array);
-				sort($blacklist_usernames_array);
+				$blacklist_new_usernames = array_unique(array_filter($blacklist_new_usernames));
+				sort($blacklist_new_usernames);
 	
-				update_option('ajdg_nobot_blacklist_usernames', $blacklist_usernames_array);
+				update_option('ajdg_nobot_blacklist_usernames', $blacklist_new_usernames);
 			}
 	
 			$blacklist_protect['namespaces'] = (isset($_POST['ajdg_nobot_allow_namespaces'])) ? 1 : 0;
@@ -423,7 +380,7 @@ function ajdg_nobot_save_settings() {
 			$blacklist_protect['emailperiods'] = (isset($_POST['ajdg_nobot_allow_emailperiods'])) ? 1 : 0;
 			update_option('ajdg_nobot_blacklist_protect', $blacklist_protect);
 			
-			ajdg_nobot_return('ajdg-nobot-settings', 101);
+			ajdg_nobot_return('ajdg-nobot-settings', 100);
 			exit;
 		} else {
 			ajdg_nobot_nonce_error();
@@ -435,7 +392,6 @@ function ajdg_nobot_save_settings() {
 /*-------------------------------------------------------------
  Name:      ajdg_nobot_check_config
  Purpose:   Update the options
- Since:		2.0
 -------------------------------------------------------------*/
 function ajdg_nobot_check_config() {
     $nobot_protect = get_option('ajdg_nobot_protect');
@@ -476,7 +432,6 @@ function ajdg_nobot_check_config() {
 /*-------------------------------------------------------------
  Name:      ajdg_nobot_blacklist
  Purpose: 	Check for banned emails on registration
- Since:		1.0
 -------------------------------------------------------------*/
 function ajdg_nobot_blacklist($errors, $user_login, $user_email) {
  	global $wp_version;
@@ -530,7 +485,6 @@ function ajdg_nobot_blacklist($errors, $user_login, $user_email) {
 /*-------------------------------------------------------------
  Name:      ajdg_nobot_security_hash
  Purpose: 	Generate security hash used in question verification
- Since:		1.0
 -------------------------------------------------------------*/
 function ajdg_nobot_security_hash($id, $question, $answer) {
 	// Hash format: SHA256( Question ID + Question Title + serialize( Question Answers ) )
@@ -542,7 +496,6 @@ function ajdg_nobot_security_hash($id, $question, $answer) {
 /*-------------------------------------------------------------
  Name:      ajdg_nobot_template
  Purpose: 	Settings questions listing
- Since:		1.0
 -------------------------------------------------------------*/
 function ajdg_nobot_template($id, $question, $answers) {
 	$id = intval($id);
@@ -581,33 +534,7 @@ function ajdg_nobot_template($id, $question, $answers) {
 }
 
 /*-------------------------------------------------------------
- Name:      ajdg_nobot_notifications_dashboard
- Since:		1.1
--------------------------------------------------------------*/
-function ajdg_nobot_notifications_dashboard() {
-	global $current_user;
-
-	if(isset($_GET['hide'])) {
-		if($_GET['hide'] == 1) update_option('ajdg_nobot_hide_review', 1);
-	}
-
-	$displayname = (strlen($current_user->user_firstname) > 0) ? $current_user->user_firstname : $current_user->display_name;
-	$review_banner = get_option('ajdg_nobot_hide_review');
-	if($review_banner != 1 AND $review_banner < (current_time('timestamp') - 2419200)) {
-		echo '<div class="ajdg-notification notice" style="">';
-		echo '	<div class="ajdg-notification-logo" style="background-image: url(\''.plugins_url('/images/notification.png', __FILE__).'\');"><span></span></div>';
-		echo '	<div class="ajdg-notification-message">Welcome back <strong>'.$displayname.'</strong>! If you like <strong>No-Bot Registration</strong> let the world know that you do. Thanks for your support!.<br />If you have questions, complaints or something else that does not belong in a review, please use the <a href="https://ajdg.solutions/forums/forum/no-bot-registration/">support forum</a>!</div>';
-		echo '	<div class="ajdg-notification-cta">';
-		echo '		<a href="https://wordpress.org/support/plugin/no-bot-registration/reviews/?rate=5#postform" class="ajdg-notification-act button-primary">Write Review</a>';
-		echo '		<a href="tools.php?page=ajdg-nobot-settings&hide=1" class="ajdg-notification-dismiss">Maybe later</a>';
-		echo '	</div>';
-		echo '</div>';
-	}
-}
-
-/*-------------------------------------------------------------
  Name:      ajdg_nobot_nonce_error
- Since:		1.0
 -------------------------------------------------------------*/
 function ajdg_nobot_nonce_error() {
 	echo '	<h2 style="text-align: center;">'.__('Oh no! Something went wrong!', 'no-bot-registration').'</h2>';
