@@ -1,6 +1,6 @@
 === No-Bot Registration ===
 Contributors: adegans
-Stable tag: 2.5
+Stable tag: 2.5.1
 Tested up to: 6.9
 Requires PHP: 8.0
 Requires at least: 5.8
@@ -31,7 +31,7 @@ Questions can be as simple as "1 + 1", with possible answers being 1, one or uno
 
 == Changelog ==
 
-= 2.5 - December 21, 2025 = 
+= 2.5 & 2.5.1 - December 21, 2025 = 
 * Added - Support for updates through GooseUp
 * Added - Meta links
 * Update - Refreshed dashboard look

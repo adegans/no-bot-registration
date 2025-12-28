@@ -5,7 +5,7 @@ Plugin URI: https://ajdg.solutions/product/no-bot-registration/
 Author: Arnan de Gans
 Author URI: https://www.arnan.me/
 Description: Prevent people from registering by blacklisting emails and present people with a security question when registering or posting a comment.
-Version: 2.5
+Version: 2.5.1
 License: GPLv3
 
 Text Domain no-bot-registration
@@ -48,7 +48,7 @@ add_action('register_form', 'ajdg_nobot_registration_field');
 add_filter('registration_errors', 'ajdg_nobot_check_registration', 10, 3);
 add_action('registration_errors', 'ajdg_nobot_blacklist', 11, 3);
 
-if(is_plugin_active('woocommerce/woocommerce.php')) {
+if(in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))){ 
 	// Protect WooCommerce My-Account page
 	add_action('woocommerce_register_form', 'ajdg_nobot_woocommerce_field');
 	// Protect WooCommerce Registration on checkout
