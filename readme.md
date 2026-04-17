@@ -6,6 +6,7 @@ Prevent bots from creating accounts by blacklisting domains and usernames and pr
 View on: [ajdg.solutions](https://ajdg.solutions/product/no-bot-registration/) ~ [WordPres.org](https://wordpress.org/plugins/no-bot-registration/)
 
 ## Description
+
 Tired of spam bots in your WordPress and ClassicPress website? Do you want to get rid of false registrations and other spammy nonsense? Don't wan't to use a clumsy and user-unfriendly Captcha? Don't want to use a Captcha from Google or other big-tech company period?
 
 Meet **No-Bot Registration**, easy to use, superior protection without making it hard for your visitors. Easily blacklist (partial) email addresses and domains so they can no longer register an account. \
@@ -15,6 +16,7 @@ If they answer wrong, they get denied their account.
 Questions can be as simple as "1 + 1", with possible answers being 1, one or uno. That way you can plan for eventualities and how people interpret your question.
 
 ## Features
+
 * Protect registration forms
 * Protect the WooCommerce checkout form if you let people register from there
 * Protect the Classic Commerce checkout form like you do with WooCommerce
@@ -25,9 +27,20 @@ Questions can be as simple as "1 + 1", with possible answers being 1, one or uno
 * Configurable notification messages for users failing the security tests
 
 ## Installation
+
 1. Navigate to your WordPress or ClassicPress dashboard.
 2. Navigate to the Plugins page and click 'Add New'.
 3. Search for 'Arnan No-Bot' or 'No-bot registration' in the plugin search
 4. Click install on the 'No-bot registration' plugin.
 5. Once installed, activate the plugin and you're ready to go.
 6. Navigate to Tools > No-Bot Registration in your dashboard for settings.
+
+## GooseUp compatible
+
+No-Bot Registration is compatible with the GooseUp Update System.  
+Find out more and [download the plugin](https://ajdg.solutions/product/gooseup/) from my website.
+
+## Is No-Bot Registration useful for you?
+
+If you find No-Bot Registration useful and want to help out, please consider a small [token of thanks](https://www.arnan.me/donate/)!  
+Your donations will help as motivation. Thank you for your support!  
